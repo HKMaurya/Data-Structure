@@ -11,7 +11,7 @@ class LinkedList {
     public append(item) {
         let currentItem: LinkedListNode = this.head;
         let newItem = new LinkedListNode(item);
-        // If list is Empty add the element and make it head
+        // If list is Empty add the item and make it head
         if (!currentItem) {
             this.head = newItem;
         } else {
@@ -25,7 +25,7 @@ class LinkedList {
         this.size++;
     }
 
-    // Add the element at the beginning of the linked list
+    // Add the item at the beginning of the linked list
     public prepend(item) {
         let newItem = new LinkedListNode(item);
         let currentItem = this.head;
@@ -55,13 +55,13 @@ class LinkedList {
         return this.size === 0;
     }
 
-    // Finds the index of element
+    // Finds the index of item
     public indexOf(item) {
         let count = 0;
         let currentItem = this.head;
         // iterate over the list
         while (currentItem != null) {
-            // compare each element of the list with given element
+            // compare each item of the list with given item
             if (currentItem.value === item) {
                 return count;
             } else {
@@ -72,8 +72,56 @@ class LinkedList {
         // not found
         return -1;
     }
-}
 
+    // Removes a given item from the list
+    public removeItem(item) {
+        let currentItem = this.head;
+        let previous = null;
+        // Iterate over the list
+        while(currentItem != null) {
+            // Comparing item with current element if found then remove and return true
+            if(currentItem.value === item) {
+                if(previous == null) {
+                    this.head = currentItem.next;
+                } else {
+                    previous.next = currentItem.next;
+                }
+                this.size--;
+                return currentItem.value;
+            }
+            previous = currentItem;
+            currentItem = currentItem.next;
+        }
+        return -1;
+    } 
+
+    // Removes an element from the specified location
+    public removeFrom(index) {
+        if(index > 0 && index > this.size) {
+            return -1;
+        } else {
+            let currentItem = this.head;
+            let previous = currentItem;
+            let it = 0;
+            // deleting first element
+            if(index === 0) {
+                this.head = currentItem.next;
+            } else {
+                // iterate over the list to the position to remove an item
+                while(it < index) {
+                    it++;
+                    previous = currentItem;
+                    currentItem = currentItem.next;
+                }
+                //remove the item
+                previous.next  = currentItem.next;
+            }
+            this.size--;
+            // return the remove element
+            return currentItem.value; 
+        }
+    }
+}
 
 // User defined class LinkedListNode
 class LinkedListNode {
@@ -89,7 +137,13 @@ class LinkedListNode {
 let h = new LinkedListNode(4);
 let l = new LinkedList(h);
 l.append(3);
-console.log(l.printList());
-console.log(l.sizeOfList());
-console.log(l.isEmpty());
-console.log(l.indexOf(3));
+console.log(l.printList()); // print 4 3
+console.log(l.sizeOfList()); // print 2
+console.log(l.isEmpty()); // print false
+l.prepend(13);
+console.log(l.printList()); // print 13 4 3
+console.log(l.indexOf(3)); // print 2
+console.log(l.removeItem(4)); // print 4
+console.log(l.printList()); // print 13 3
+console.log(l.removeFrom(0)); // print 13
+console.log(l.printList()); // print 3
