@@ -34,6 +34,36 @@ class LinkedList {
         this.size++;
     }
 
+    // Insert item at the position index of the list
+    public insertAt(item, index) {
+        if(index > 0 && index > this.size) {
+            return false;
+        } else {
+            // creates a new node
+            let node = new LinkedListNode(item);
+            let currentItem = this.head;
+            let previous;
+            // add the element to the first index
+            if(index === 0) {
+                node.next = this.head;
+                this.head = node;
+            } else {
+                currentItem = this.head;
+                let it = 0;
+                //Iterate over the list to find the position to insert
+                while(it < index) {
+                    it++;
+                    previous = currentItem;
+                    currentItem = currentItem.next;
+                }
+                // adding an element
+                node.next = currentItem;
+                previous = node;
+            }
+            this.size++;
+        }
+    }
+
     // prints the list items
     public printList() {
         let currentItem = this.head;
@@ -134,16 +164,19 @@ class LinkedListNode {
     }
 }
 
-let h = new LinkedListNode(4);
-let l = new LinkedList(h);
-l.append(3);
-console.log(l.printList()); // print 4 3
-console.log(l.sizeOfList()); // print 2
-console.log(l.isEmpty()); // print false
-l.prepend(13);
-console.log(l.printList()); // print 13 4 3
-console.log(l.indexOf(3)); // print 2
-console.log(l.removeItem(4)); // print 4
-console.log(l.printList()); // print 13 3
-console.log(l.removeFrom(0)); // print 13
-console.log(l.printList()); // print 3
+let node = new LinkedListNode(4);
+let list = new LinkedList(node);
+list.append(3);
+console.log(list.printList()); // print 4 3
+console.log(list.sizeOfList()); // print 2
+console.log(list.isEmpty()); // print false
+list.prepend(13);
+console.log(list.printList()); // print 13 4 3
+console.log(list.indexOf(3)); // print 2
+console.log(list.removeItem(4)); // print 4
+console.log(list.printList()); // print 13 3
+console.log(list.removeFrom(0)); // print 13
+console.log(list.printList()); // print 3
+list.insertAt(60,0);
+console.log(list.printList()); // print 60 3
+
